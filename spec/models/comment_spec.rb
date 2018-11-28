@@ -14,6 +14,13 @@ RSpec.describe User, type: :model do
       expect(comment).to validate_presence_of(:body)
       expect(comment).to validate_length_of(:body).is_at_most(500)
     end
+
+    it 'ensures unique author per movie' do
+      Comment.create(body: 'First comment', author: author, movie: movie)
+      another_comment = Comment.new(body: 'Second comment', author: author, movie: movie)
+      another_comment.valid?
+      expect(another_comment.errors[:author]).to include('has already been taken')
+    end
   end
 
   describe 'Associations' do
