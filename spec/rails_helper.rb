@@ -23,7 +23,7 @@ SimpleCov.start "rails"
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -33,6 +33,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Capybara::DSL
   config.include Capybara::RSpecMatchers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :request
   config.infer_spec_type_from_file_location!
 end
 
