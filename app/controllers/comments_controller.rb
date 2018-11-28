@@ -13,6 +13,14 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = @movie.comments.find(params[:id])
+    if @comment.author == current_user
+      @comment.destroy
+      flash[:notice] = 'Comment was successfully deleted!'
+    else
+      flash[:error] = 'Something went wrong. Comment cannot be deleted!'
+    end
+    redirect_to movie_path(@movie)
   end
 
   private
