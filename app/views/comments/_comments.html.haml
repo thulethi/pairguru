@@ -1,0 +1,11 @@
+- @movie.comments.each do |comment|
+  .comment
+    .col-md-8
+      %i.body= comment.body
+      - if comment.author == current_user
+        =link_to 'Delete', movie_comment_path(@movie, comment), method: :delete, data: { confirm: 'Are you sure?' }
+    .col-md-4
+      %p
+      = time_ago_in_words(comment.created_at)
+      ago by
+      %strong= comment.author.name
