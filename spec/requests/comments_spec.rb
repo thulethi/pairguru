@@ -9,11 +9,34 @@ RSpec.describe 'Comments requests', type: :request do
 
     it 'displays comments list of selected movie' do
       visit '/movies/' + selected_movie.id.to_s
-      expect(page).to have_selector('h3', text: 'Comments')
       expect(page).to have_selector('.comment', count: comments_count)
     end
+  end
 
-    it 'POST /comments'
-    it 'DELETE /comments'
+  before do
+    @user = FactoryBot.create(:user, name: 'James Bond', email: 'bond@email.com', password: '12345678')
+    @user.confirm
+    sign_in(@user)
+  end
+
+  describe 'POST /comments' do
+    let(:end_point)    { '/movies/' + selected_movie.id.to_s + '/comments' }
+    let(:valid_post)   { post end_point, params: { comment: {body: 'Great!'}, movie: selected_movie } }
+    let(:invalid_post) { post end_point, params: { comment: {body: nil}, movie: selected_movie } }
+
+    context 'with valid attributes' do
+      it 'creates new comment' do
+        expect {valid_post}.to change(Comment, :count).by(+1)
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'fails to create new comment' do
+        expect {invalid_post}.to change(Comment, :count).by(0)
+      end
+    end
+  end
+
+  describe 'DELETE /comments' do
   end
 end
