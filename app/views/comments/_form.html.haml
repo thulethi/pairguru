@@ -1,0 +1,9 @@
+= form_for :comment, url: movie_comments_path(@movie) do |f|
+  = f.hidden_field :movie_id,  value: @movie.id
+  = f.hidden_field :author_id, value: current_user.id
+  .form-group
+  = f.label :body, 'Leave you comment here'
+  %br/
+  = f.text_area :body
+  .form-group
+  = f.submit 'Post comment', class: 'btn btn-primary'

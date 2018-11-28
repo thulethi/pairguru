@@ -1,2 +1,11 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.comment {
+  font-size: 17px;
+  margin: 20px 0px;
+  padding: 10px 0px;
+  .body {
+    font-size: 19px;
+  }
+}
