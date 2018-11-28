@@ -1,0 +1,4 @@
+- if @movie.comments.where(author: current_user).blank?
+  = render 'comments/form'
+- elsif @movie.comments.where(author: current_user).present?
+  = render plain: 'You have already commented on this movie!'
