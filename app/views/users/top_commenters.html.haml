@@ -1,0 +1,13 @@
+%h1.text-center Top commenters of the week
+%table.table.table-striped
+  %thead
+    %tr
+      %th #
+      %th Commenters' name
+      %th Number of comments
+  %tbody
+    - @top_commenters.each_with_index do |user, i|
+      %tr.top-commenter
+        %td= i + 1
+        %td= user.name
+        %td= user.comments_amount

@@ -4,5 +4,11 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password(8) }
     confirmed_at Time.zone.now
+
+    trait :with_comments do
+      after(:create) do |user|
+        create_list :comment, rand(3..30), :last_week, author: user
+      end
+    end
   end
 end
