@@ -9,6 +9,7 @@ RSpec.describe 'Comments requests', type: :request do
 
     it 'displays comments list of selected movie' do
       visit '/movies/' + selected_movie.id.to_s
+
       expect(page).to have_selector('.comment', count: comments_count)
     end
   end
@@ -43,16 +44,16 @@ RSpec.describe 'Comments requests', type: :request do
 
     context 'when user is the author' do
       it 'deletes comment' do
-        puts 'HIIIIII'
         comment_to_delete = FactoryBot.create :comment, movie: selected_movie, author: @user
+
         expect{ delete path + comment_to_delete.id.to_s }.to change(Comment, :count).by(-1)
       end
     end
 
     context 'when user is not the author' do
       it 'fails to delete comment' do
-        puts 'HELOOOOOO'
         comment_to_delete = FactoryBot.create :comment, movie: selected_movie, author: another_user
+
         expect{ delete path + comment_to_delete.id.to_s }.to change(Comment, :count).by(0)
       end
     end
